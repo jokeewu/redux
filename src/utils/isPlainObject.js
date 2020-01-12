@@ -1,4 +1,6 @@
 /**
+ * 通过字面量或new Object()创建的对象
+ * 
  * @param {any} obj The object to inspect.
  * @returns {boolean} True if the argument appears to be a plain object.
  */

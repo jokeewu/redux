@@ -30,7 +30,16 @@ export default function applyMiddleware(...middlewares) {
       getState: store.getState,
       dispatch: (...args) => dispatch(...args)
     }
+
+    // middleware = ({ dispatch, getState }) => next => action => {
+    //   if (typeof action === 'function') {
+    //     return action(dispatch, getState, extraArgument);
+    //   }
+    //   return next(action);
+    // }
+
     const chain = middlewares.map(middleware => middleware(middlewareAPI))
+    // 异步处理成为可能
     dispatch = compose(...chain)(store.dispatch)
 
     return {

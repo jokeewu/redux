@@ -6,33 +6,47 @@ import isPlainObject from './utils/isPlainObject'
 /**
  * Creates a Redux store that holds the state tree.
  * The only way to change the data in the store is to call `dispatch()` on it.
- *
+ * 
+ * 创建Redux Store用于存放状态树，修改Store中数据只能通过调用`dispatch()`
+ * 
  * There should only be a single store in your app. To specify how different
  * parts of the state tree respond to actions, you may combine several reducers
  * into a single reducer function by using `combineReducers`.
  *
+ * 你的应用应该只有一个Store。通过合并多个reducer，达到状态树的不同部分响应不同的Action。
+ * 
  * @param {Function} reducer A function that returns the next state tree, given
  * the current state tree and the action to handle.
  *
+ * 一个函数给定当前状态树和Action返回下一个状态树
+ * 
  * @param {any} [preloadedState] The initial state. You may optionally specify it
  * to hydrate the state from the server in universal apps, or to restore a
  * previously serialized user session.
  * If you use `combineReducers` to produce the root reducer function, this must be
  * an object with the same shape as `combineReducers` keys.
  *
+ * 初始化状态，从服务器选择性填充状态，或者恢复一个上一次序列化的用户会话。如果通过`combineReducers`产生的reducer函数，该项必须是一个与`combineReducers`有相同结构的对象
+ * 
  * @param {Function} [enhancer] The store enhancer. You may optionally specify it
  * to enhance the store with third-party capabilities such as middleware,
  * time travel, persistence, etc. The only store enhancer that ships with Redux
  * is `applyMiddleware()`.
  *
+ * Store增强，可选的，通过第三方能力增强，如：中间件、时间旅行、持久化等等。通过`applyMiddleware()`增强
+ * 
  * @returns {Store} A Redux store that lets you read the state, dispatch actions
  * and subscribe to changes.
+ * 
+ * 一个Redux Store用于获取状态，分发Action和订阅改变
+ * 
  */
 export default function createStore(reducer, preloadedState, enhancer) {
   if (
     (typeof preloadedState === 'function' && typeof enhancer === 'function') ||
     (typeof enhancer === 'function' && typeof arguments[3] === 'function')
   ) {
+    // 尝试传递多个增强器
     throw new Error(
       'It looks like you are passing several store enhancers to ' +
         'createStore(). This is not supported. Instead, compose them ' +

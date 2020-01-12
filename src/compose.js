@@ -18,5 +18,13 @@ export default function compose(...funcs) {
     return funcs[0]
   }
 
-  return funcs.reduce((a, b) => (...args) => a(b(...args)))
+  // return funcs.reduce((a, b) => (...args) => a(b(...args)))
+
+  // 关于`Array.prototype.reduce`参考:
+  // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+  return funcs.reduce(function(a, b) {
+    return function(...args) {
+      return a(b(...args))
+    }
+  })
 }
